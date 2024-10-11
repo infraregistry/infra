@@ -1,0 +1,54 @@
+services:
+  infraregistry-infra-timescaledb:
+    container_name: infraregistry-infra-timescaledb
+    platform: linux/amd64
+    image: timescale/timescaledb:latest-pg15
+    command: postgres -c shared_preload_libraries=timescaledb
+    networks:
+      - infraregistry
+    ports:
+      - "5432:5432"
+    volumes:
+      - infraregistry-infra-timescaledb:/var/lib/postgresql/data
+    environment:
+      - PGDATA=/var/lib/postgresql/data/timescaledb
+      - POSTGRES_DB=infraregistry
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  infraregistry-infra-rabbitmq:
+    platform: "linux/amd64"
+    image: "rabbitmq:3-management"
+    container_name: "infraregistry-infra-rabbitmq"
+    hostname: "rabbitmq.local"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQGFDSSDFFDDGSFDFSD"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    networks:
+      - infraregistry
+  infraregistry-infra-surrealdb:
+    image: surrealdb/surrealdb:latest
+    ports:
+      - "9000:8000"
+    environment:
+      - SURREALDB_ROOT_PASSWORD=root
+    command:
+    - start
+    - --auth
+    - --log
+    - info
+    - --user
+    - root
+    - --pass
+    - root
+    - --strict
+    networks:
+      - infraregistry
+volumes:
+  infraregistry-infra-timescaledb:
+networks:
+  infraregistry:

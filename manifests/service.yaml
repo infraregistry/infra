@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spa
+  namespace: infraregistry
+spec:
+  selector:
+    app: spa
+  ports:
+  - port: 80
+    targetPort: 80

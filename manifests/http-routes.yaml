@@ -1,0 +1,17 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: spa
+  namespace: infraregistry
+spec:
+  hostnames:
+    - "app.infraregistry.com"
+  parentRefs:
+    - name: gateway
+      namespace: ingress-external
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: spa
+          port: 80

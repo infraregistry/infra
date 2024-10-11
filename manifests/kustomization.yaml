@@ -1,0 +1,8 @@
+resources:
+  - namespace.yaml
+  - cloudflare.yaml
+  - cluster-issuer.yaml
+  - certificate.yaml
+  - http-routes.yaml
+  - service.yaml
+  - deployment.yaml
