@@ -10,7 +10,7 @@ spec:
   parentRefs:
     - name: gateway
       namespace: ingress-external
-      sectionName: https
+      sectionName: https-infraregistry-com-wildcard
   rules:
     - backendRefs:
         - name: spa

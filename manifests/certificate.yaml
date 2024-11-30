@@ -1,14 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: infraregistry
+  name: infraregistry-com
   namespace: ingress-external
 spec:
   issuerRef:
-    name: letsencrypt-prod
+    name: letsencrypt-infraregistry-com
     kind: ClusterIssuer
-  secretName: infraregistry
+  secretName: infraregistry-com
   dnsNames:
   - infraregistry.com
   - "*.infraregistry.com"
-  - "*.dev.infraregistry.com"
+  # - "*.dev.infraregistry.com"

@@ -17,11 +17,10 @@ services:
       - POSTGRES_PASSWORD=postgres
   infraregistry-infra-rabbitmq:
     platform: "linux/amd64"
-    image: "rabbitmq:3-management"
+    image: "rabbitmq:3.11-management"
     container_name: "infraregistry-infra-rabbitmq"
     hostname: "rabbitmq.local"
     environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQGFDSSDFFDDGSFDFSD"
       RABBITMQ_DEFAULT_USER: "rabbitmq"
       RABBITMQ_DEFAULT_PASS: "rabbitmq"
       RABBITMQ_DEFAULT_VHOST: "/"
@@ -38,7 +37,6 @@ services:
       - SURREALDB_ROOT_PASSWORD=root
     command:
     - start
-    - --auth
     - --log
     - info
     - --user

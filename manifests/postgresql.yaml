@@ -1,0 +1,49 @@
+apiVersion: stackgres.io/v1
+kind: SGPostgresConfig
+metadata:
+  name: default
+  namespace: infraregistry
+spec:
+  postgresVersion: "16"
+  postgresql.conf: {}
+---
+apiVersion: stackgres.io/v1
+kind: SGInstanceProfile
+metadata:
+  name: four-by-eight
+  namespace: infraregistry
+spec:
+  cpu: "4"
+  memory: 8Gi
+---
+apiVersion: stackgres.io/v1
+kind: SGCluster
+metadata:
+  namespace: infraregistry
+  name: cluster
+spec:
+  postgres:
+    version: "16"
+  instances: 3
+  sgInstanceProfile: "four-by-eight"
+  pods:
+    persistentVolume:
+      size: '20Gi'
+  configurations:
+    sgPostgresConfig: default
+    # sgPoolingConfig: 'poolconfig1'
+  #   backups:
+  #   - sgObjectStorage: 'backupconfig1'
+  #     cronSchedule: '*/5 * * * *'
+  #     retention: 6
+  # managedSql:
+  #   scripts:
+  #   - sgScript: cluster-scripts
+  # distributedLogs:
+  #   sgDistributedLogs: 'distributedlogs'
+  prometheusAutobind: true
+  postgresServices:
+    primary:
+      type: LoadBalancer
+    replicas:
+      type: LoadBalancer
